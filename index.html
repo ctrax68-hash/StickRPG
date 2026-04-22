@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Stick RPG Mobile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- START SCREEN -->
+
+<div id="startScreen">
+  <div class="s-title">STICK RPG<br><span style="font-size:11px;color:var(--gold)">MOBILE</span></div>
+  <div class="s-sub">You wake up in the 2D World…</div>
+  <input id="nameInput" type="text" placeholder="Enter your name…" maxlength="12" autocomplete="off" autocorrect="off" spellcheck="false"/>
+  <div style="font-family:'Press Start 2P';font-size:7px;color:#444;text-align:center">SPEND 10 STAT POINTS</div>
+  <div class="s-box">
+    <div class="pts-left" id="ptsLeft">Points: 10</div>
+    <div class="a-row">
+      <span class="a-lbl" style="color:#f63">💪 Strength</span>
+      <button class="a-btn" type="button" ontouchstart="allocChange('str',-1)">−</button>
+      <div class="a-val" id="val-str">0</div>
+      <button class="a-btn" type="button" ontouchstart="allocChange('str',1)">+</button>
+    </div>
+    <div class="a-row">
+      <span class="a-lbl" style="color:#4af">🧠 Intelligence</span>
+      <button class="a-btn" type="button" ontouchstart="allocChange('int',-1)">−</button>
+      <div class="a-val" id="val-int">0</div>
+      <button class="a-btn" type="button" ontouchstart="allocChange('int',1)">+</button>
+    </div>
+    <div class="a-row">
+      <span class="a-lbl" style="color:#f8f">✨ Charm</span>
+      <button class="a-btn" type="button" ontouchstart="allocChange('cha',-1)">−</button>
+      <div class="a-val" id="val-cha">0</div>
+      <button class="a-btn" type="button" ontouchstart="allocChange('cha',1)">+</button>
+    </div>
+  </div>
+  <button id="continueBtn" class="s-btn gold" type="button" ontouchstart="onContinue()" style="display:none">► CONTINUE</button>
+  <button id="startBtn" class="s-btn" type="button" ontouchstart="onNewGame()">► NEW GAME</button>
+  <button id="delSave" class="del-save" type="button" ontouchstart="onDelSave()" style="display:none">delete save data</button>
+</div>
+
+<!-- HUD -->
+
+<div id="hud">
+  <span class="hp hn" id="hN">STICK</span>
+  <span class="hp h-str" id="hS">STR 5</span>
+  <span class="hp h-int" id="hI">INT 5</span>
+  <span class="hp h-cha" id="hC">CHA 5</span>
+  <span class="hp h-kar" id="hK">☯ 0</span>
+  <span class="hp h-money" id="hM">$50</span>
+  <span class="hp h-day" id="hD">DAY 1</span>
+  <span class="hp" style="border-color:#f0a;color:#f0a;font-size:11px;" id="hTime">8AM</span>
+  <span class="hp" style="border-color:#4fc;color:#4fc;font-size:11px;" id="hEnergy">⚡100</span>
+</div>
+
+<!-- GAME WORLD -->
+
+<div id="viewport">
+  <div id="skyOverlay" style="position:absolute;inset:0;pointer-events:none;z-index:2;transition:background 2s"></div>
+  <div id="world">
+    <div id="player">
+      <div class="ph"><div class="pe"><div class="pey"></div><div class="pey"></div></div></div>
+      <div class="pb"></div><div class="pla"></div><div class="pra"></div>
+      <div class="pll"></div><div class="prl"></div>
+    </div>
+  </div>
+</div>
+
+<!-- NEAR INDICATOR -->
+
+<div id="nearInd">▲ ENTER</div>
+
+<!-- BOTTOM UI -->
+
+<div id="botUI">
+  <div id="dpad">
+    <div class="db" id="du">▲</div>
+    <div class="db" id="dl">◀</div>
+    <div class="dc"></div>
+    <div class="db" id="dr">▶</div>
+    <div class="db" id="dd">▼</div>
+  </div>
+  <div id="acts">
+    <button class="ab ab-e" id="btnE">ENTER / TALK</button>
+    <button class="ab ab-s" id="btnSl">SLEEP</button>
+    <button class="ab ab-st" id="btnSt">STATUS</button>
+  </div>
+  <div id="log">
+    <div class="ml ms">Welcome to the 2D World.</div>
+    <div class="ml mo">Walk with the D-Pad.</div>
+    <div class="ml ms">Approach buildings → ENTER.</div>
+  </div>
+</div>
+
+<!-- MODAL -->
+
+<div id="modal" class="h">
+  <div class="mbox" id="mbox"></div>
+</div>
+
+<!-- TOAST -->
+
+<div id="toast" class="h"></div>
+
+<!-- ACHIEVEMENTS -->
+
+<div id="achBadge"></div>
+
+<!-- SAVE INDICATOR -->
+
+<div id="saveInd">💾 SAVED</div>
+
+<!-- MINIMAP -->
+
+<div id="minimap">
+  <canvas id="minimapCanvas" width="80" height="80"></canvas>
+  <div id="minimapLabel">MAP</div>
+</div>
+
+<!-- BUG PANEL TOGGLE -->
+
+<div id="bugToggle">🐛 BUG</div>
+
+<!-- BUG PANEL -->
+
+<div id="bugPanel">
+  <div id="bugLog">Bug reporter ready. Tap send to report an issue.</div>
+  <div id="bugRow">
+    <input id="bugInput" type="text" placeholder="Describe the bug…" autocomplete="off"/>
+    <div id="bugSend">SEND</div>
+    <div id="bugClose">✕</div>
+  </div>
+</div>
+
+<script src="game.js"></script>
+
+</body>
+</html>
